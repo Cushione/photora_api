@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "ENV" in os.environ and os.environ["ENV"] == "DEV"
 
-ALLOWED_HOSTS = ["photora.herokuapp.com", "photora-api.herokuapp.com"]
+ALLOWED_HOSTS = ["photora.herokuapp.com", "photora-api.herokuapp.com", "localhost"]
 
 
 # Application definition
