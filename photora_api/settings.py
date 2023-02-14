@@ -70,6 +70,8 @@ else:
 
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = ['https://*.herokuapp.com', "https://*.gitpod.io"]
+
 ROOT_URLCONF = 'photora_api.urls'
 
 TEMPLATES = [
