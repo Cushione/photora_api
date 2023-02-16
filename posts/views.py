@@ -32,10 +32,19 @@ class PostList(APIView):
 
 
 class PostDetail(APIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get(self, request, id):
         post = get_object_or_404(Post, id=id)
         serializer = PostSerializer(post, context={'request': request})
         return Response(serializer.data)
 
-    
+    def put(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        self.check_object_permissions(request, post)
+        serializer = PostSerializer(post, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

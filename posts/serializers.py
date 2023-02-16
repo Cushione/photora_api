@@ -9,7 +9,6 @@ class PostSerializer(serializers.ModelSerializer):
     def get_is_owner(self, obj):
         return self.context['request'].user == obj.owner
 
-
     def validate_image(self, value):
         if value.size > 1024 * 1024 * 2:
             raise serializers.ValidationError(
