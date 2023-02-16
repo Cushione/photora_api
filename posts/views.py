@@ -9,13 +9,14 @@ from photora_api.permissions import IsOwnerOrReadOnly
 
 class PostList(APIView):
     serializer_class = PostSerializer
-    
+ 
     def get(self, request):
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True, context={'request': request})
+        serializer = PostSerializer(
+            posts, many=True, context={'request': request}
+            )
         return Response(serializer.data)
 
-    
     def post(self, request):
         serializer = PostSerializer(
             data=request.data, context={'request': request}
@@ -28,3 +29,13 @@ class PostList(APIView):
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class PostDetail(APIView):
+
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        serializer = PostSerializer(post, context={'request': request})
+        return Response(serializer.data)
+
+    
