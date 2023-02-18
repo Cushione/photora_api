@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Post
-from .serializers import PostSerializer
+from .serializers import PostSerializer, PostLikeSerializer
 from photora_api.permissions import IsOwnerOrReadOnly
 
 
@@ -54,3 +55,21 @@ class PostDetail(APIView):
         self.check_object_permissions(request, post)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PostLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        serializer = PostLikeSerializer(post.likes, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            post.likes.add(request.user)
+            return Response(status=status.HTTP_201_CREATED)
