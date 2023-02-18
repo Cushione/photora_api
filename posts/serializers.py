@@ -50,6 +50,7 @@ class PostLikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        read_only_fields = ['username']
         fields = [
-            'username', 'profile_id', 'profile_image', 'is_followed'
+            'profile_id', 'profile_image', 'is_followed'
         ]
