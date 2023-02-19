@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer
 from posts.models import Post
@@ -10,6 +11,7 @@ from photora_api.permissions import IsOwnerOrReadOnly
 
 class CommentList(APIView):
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
  
     def get(self, request, post_id):
         comments = Comment.objects.filter(post=post_id)

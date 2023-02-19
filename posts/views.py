@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
 from profiles.serializers import ProfileListSerializer
@@ -14,6 +14,7 @@ from django.db.models import Q
 
 class PostList(APIView):
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
  
     def get(self, request):
         posts = Post.objects.all()
@@ -63,7 +64,7 @@ class PostDetail(APIView):
 
 class PostLike(APIView):
     serializer_class = ProfileListSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, id):
         post = get_object_or_404(Post, id=id)
