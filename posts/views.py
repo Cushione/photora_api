@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Post
 from .serializers import PostSerializer, PostLikeSerializer
 from photora_api.permissions import IsOwnerOrReadOnly
+from functools import reduce
+import operator
+from django.db.models import Q
 
 
 class PostList(APIView):
@@ -58,6 +61,7 @@ class PostDetail(APIView):
 
 
 class PostLike(APIView):
+    serializer_class = PostLikeSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
@@ -73,3 +77,30 @@ class PostLike(APIView):
         else:
             post.likes.add(request.user)
             return Response(status=status.HTTP_201_CREATED)
+
+
+class PostSearch(APIView):
+    serializer_class = PostSerializer
+
+    def get(self, request):
+        keyword_list = request.query_params.get('keywords')
+        if keyword_list:
+            keywords = keyword_list.split()
+            search_query = reduce(
+                operator.and_,
+                (
+                    Q(
+                        Q(title__icontains=keyword)
+                        | Q(description__icontains=keyword)
+                    )
+                    for keyword in keywords
+                ),
+            )
+
+            search_result = Post.objects.filter(search_query)
+            serializer = PostSerializer(
+                search_result, many=True, context={'request': request}
+            )
+            return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
