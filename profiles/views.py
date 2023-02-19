@@ -2,15 +2,17 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Profile
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, ProfileListSerializer
 from photora_api.permissions import IsOwnerOrReadOnly
 
 
 class ProfileList(APIView):
     def get(self, request):
         profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True, context={'request': request})
+        serializer = ProfileSerializer(
+            profiles, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -20,14 +22,36 @@ class ProfileDetail(APIView):
 
     def get(self, request, id):
         profile = get_object_or_404(Profile, id=id)
-        serializer = ProfileSerializer(profile, context={'request': request})
+        serializer = ProfileSerializer(
+            profile, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, id):
         profile = get_object_or_404(Profile, id=id)
         self.check_object_permissions(request, profile)
-        serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
+        serializer = ProfileSerializer(
+            profile, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileFollow(APIView):
+    serializer_class = ProfileListSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        profile = get_object_or_404(Profile, id=id)
+        serializer = ProfileListSerializer(
+            profile.followers, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request, id):
+        profile = get_object_or_404(Profile, id=id)
+        if profile.followers.filter(id=request.user.id).exists():
+            profile.followers.remove(request.user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            profile.followers.add(request.user)
+            return Response(status=status.HTTP_201_CREATED)

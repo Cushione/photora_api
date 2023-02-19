@@ -4,7 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Post
-from .serializers import PostSerializer, PostLikeSerializer
+from .serializers import PostSerializer
+from profiles.serializers import ProfileListSerializer
 from photora_api.permissions import IsOwnerOrReadOnly
 from functools import reduce
 import operator
@@ -61,12 +62,14 @@ class PostDetail(APIView):
 
 
 class PostLike(APIView):
-    serializer_class = PostLikeSerializer
+    serializer_class = ProfileListSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         post = get_object_or_404(Post, id=id)
-        serializer = PostLikeSerializer(post.likes, many=True, context={'request': request})
+        serializer = ProfileListSerializer(
+            post.likes, many=True, context={'request': request}
+            )
         return Response(serializer.data)
 
     def post(self, request, id):
