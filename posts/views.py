@@ -102,6 +102,7 @@ class PostSearch(APIView, PageNumberPagination):
                     Q(
                         Q(title__icontains=keyword)
                         | Q(description__icontains=keyword)
+                        | Q(owner__profile__name__icontains=keyword)
                     )
                     for keyword in keywords
                 ),
