@@ -125,4 +125,17 @@ class ProfilePosts(APIView):
             )
         return Response(serializer.data)
 
+        
+class FollowPostList(APIView, PageNumberPagination):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+ 
+    def get(self, request):
+        followed = [profile.owner for profile in request.user.followed_profiles.all()]
+        posts = Post.objects.filter(owner__in=followed)
+        paginated = self.paginate_queryset(posts, request, view=self)
+        serializer = PostSerializer(
+            paginated, many=True, context={'request': request}
+            )
+        return self.get_paginated_response(serializer.data)
 
