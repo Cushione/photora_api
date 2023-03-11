@@ -18,23 +18,12 @@ class ProfileList(APIView):
 
 class ProfileDetail(APIView):
     serializer_class = ProfileSerializer
-    permission_classes = [IsOwnerOrReadOnly]
 
     def get(self, request, id):
         profile = get_object_or_404(Profile, id=id)
         serializer = ProfileSerializer(
             profile, context={'request': request})
         return Response(serializer.data)
-
-    def put(self, request, id):
-        profile = get_object_or_404(Profile, id=id)
-        self.check_object_permissions(request, profile)
-        serializer = ProfileSerializer(
-            profile, data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileFollow(APIView):
@@ -57,3 +46,24 @@ class ProfileFollow(APIView):
         else:
             profile.followers.add(request.user)
             return Response(status=status.HTTP_201_CREATED)
+
+
+class UserProfile(APIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+    def get(self, request):
+        profile = get_object_or_404(Profile, owner=request.user)
+        serializer = ProfileSerializer(
+            profile, context={'request': request})
+        return Response(serializer.data)
+
+    def put(self, request):
+        profile = get_object_or_404(Profile, owner=request.user)
+        self.check_object_permissions(request, profile)
+        serializer = ProfileSerializer(
+            profile, data=request.data, context={'request': request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
