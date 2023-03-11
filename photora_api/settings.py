@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from datetime import timedelta
 
 if os.path.exists("env.py"):
     import env
@@ -45,7 +46,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
     'corsheaders',
+    'rest_framework_simplejwt',
     'profiles',
     'posts',
     'comments',
@@ -69,7 +78,17 @@ if 'CLIENT_ORIGIN' in os.environ:
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         r"^https://.*\.gitpod\.io$",
+        r"^https://photora\.herokuapp\.com"
     ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SITE_ID = 1
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -94,6 +113,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'photora_api.wsgi.application'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+}
 
 
 # Database
