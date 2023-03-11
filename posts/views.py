@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 from .models import Post
 from .serializers import PostSerializer
 from profiles.serializers import ProfileListSerializer
@@ -12,16 +12,17 @@ import operator
 from django.db.models import Q
 
 
-class PostList(APIView):
+class PostList(APIView, PageNumberPagination):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
  
     def get(self, request):
         posts = Post.objects.all()
+        paginated = self.paginate_queryset(posts, request, view=self)
         serializer = PostSerializer(
-            posts, many=True, context={'request': request}
+            paginated, many=True, context={'request': request}
             )
-        return Response(serializer.data)
+        return self.get_paginated_response(serializer.data)
 
     def post(self, request):
         serializer = PostSerializer(
@@ -83,7 +84,7 @@ class PostLike(APIView):
             return Response(status=status.HTTP_201_CREATED)
 
 
-class PostSearch(APIView):
+class PostSearch(APIView, PageNumberPagination):
     serializer_class = PostSerializer
 
     def get(self, request):
@@ -102,8 +103,12 @@ class PostSearch(APIView):
             )
 
             search_result = Post.objects.filter(search_query)
+            paginated = self.paginate_queryset(search_result, request, view=self)
             serializer = PostSerializer(
-                search_result, many=True, context={'request': request}
+                paginated, many=True, context={'request': request}
+            )
+            return self.get_paginated_response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
             )
             return Response(serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST)
