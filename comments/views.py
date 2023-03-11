@@ -3,22 +3,28 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 from .models import Comment
 from .serializers import CommentSerializer
 from posts.models import Post
 from photora_api.permissions import IsOwnerOrReadOnly
 
 
-class CommentList(APIView):
+class CommentsPagination(PageNumberPagination):
+    page_size = 20
+
+
+class CommentList(APIView, CommentsPagination):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
  
     def get(self, request, post_id):
         comments = Comment.objects.filter(post=post_id)
+        paginated = self.paginate_queryset(comments, request, view=self)
         serializer = CommentSerializer(
-            comments, many=True, context={'request': request}
+            paginated, many=True, context={'request': request}
             )
-        return Response(serializer.data)
+        return self.get_paginated_response(serializer.data)
 
     def post(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
