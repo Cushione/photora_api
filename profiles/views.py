@@ -49,6 +49,8 @@ class ProfileFollow(APIView):
 
     def post(self, request, id):
         profile = get_object_or_404(Profile, id=id)
+        if profile.owner == request.user:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         if profile.followers.filter(id=request.user.id).exists():
             profile.followers.remove(request.user)
             return Response(status=status.HTTP_204_NO_CONTENT)
