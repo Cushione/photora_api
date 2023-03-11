@@ -6,6 +6,7 @@ class PostSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_name = serializers.ReadOnlyField(source='owner.profile.name')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     has_liked = serializers.SerializerMethodField()
 
@@ -34,6 +35,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'owner', 'created_at', 'title', 'description',
-            'image', 'is_owner', 'profile_id', 'profile_image', 'has_liked',
-            'number_of_likes', 'number_of_comments'
+            'image', 'is_owner', 'profile_id', 'profile_image', 'profile_name', 
+            'has_liked', 'number_of_likes', 'number_of_comments'
         ]
