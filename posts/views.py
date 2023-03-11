@@ -139,3 +139,15 @@ class FollowPostList(APIView, PageNumberPagination):
             )
         return self.get_paginated_response(serializer.data)
 
+
+class LikedPostList(APIView, PageNumberPagination): 
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+ 
+    def get(self, request):
+        liked = request.user.liked_posts.all()
+        paginated = self.paginate_queryset(liked, request, view=self)
+        serializer = PostSerializer(
+            paginated, many=True, context={'request': request}
+            )
+        return self.get_paginated_response(serializer.data)

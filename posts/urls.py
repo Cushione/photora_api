@@ -4,6 +4,7 @@ from posts import views
 urlpatterns = [
     path('posts', views.PostList.as_view()),
     path('posts/feed', views.FollowPostList.as_view()),
+    path('posts/liked', views.LikedPostList.as_view()),
     path('posts/<int:id>', views.PostDetail.as_view()),
     path('posts/<int:id>/likes', views.PostLike.as_view()),
     path('posts/search', views.PostSearch.as_view()),

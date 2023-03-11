@@ -12,7 +12,7 @@ class Post(models.Model):
         upload_to='images/' 
     )
     likes = models.ManyToManyField(
-        User, related_name='post_likes', blank=True
+        User, related_name='liked_posts', blank=True
     )
 
 
