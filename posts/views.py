@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from .models import Post
 from .serializers import PostSerializer
@@ -54,7 +55,7 @@ class PostDetail(APIView):
     def put(self, request, id):
         post = get_object_or_404(Post, id=id)
         self.check_object_permissions(request, post)
-        serializer = PostSerializer(post, data=request.data, context={'request': request})
+        serializer = PostSerializer(post, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
