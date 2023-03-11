@@ -113,7 +113,16 @@ class PostSearch(APIView, PageNumberPagination):
             )
             return self.get_paginated_response(serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfilePosts(APIView): 
+    serializer_class = PostSerializer
+ 
+    def get(self, request, id):
+        posts = Post.objects.filter(owner__profile__id=id)
+        serializer = PostSerializer(
+            posts, many=True, context={'request': request}
             )
-            return Response(serializer.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data)
+
 
