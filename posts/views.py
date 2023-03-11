@@ -17,7 +17,11 @@ class PostList(APIView, PageNumberPagination):
     permission_classes = [IsAuthenticatedOrReadOnly]
  
     def get(self, request):
-        posts = Post.objects.all()
+        if request.user.is_authenticated:
+            exclude = [profile.owner for profile in request.user.followed_profiles.all()]
+            posts = Post.objects.exclude(Q(owner=request.user) | Q(owner__in=exclude))
+        else:
+            posts = Post.objects.all()
         paginated = self.paginate_queryset(posts, request, view=self)
         serializer = PostSerializer(
             paginated, many=True, context={'request': request}
