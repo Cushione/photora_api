@@ -172,7 +172,7 @@ While I was working on this project, I tried to follow an agile development appr
 The first step in my development process was to plan the website thoroughly:
 - At first, I created a simple class diagram that shows the models I was planning on implementing, with their properties and relations  
   [Link to the class diagram](https://drive.google.com/file/d/1mJWKN7ZxXBxVgPcC8Y_ZCXYZGNR4A8dm/view?usp=sharing)
-- Next, I thought about the User Interface and its layout. I created simple [wireframes](docs/wireframes.png) for the homepage and the article detail page. 
+- Next, I thought about the User Interface and its layout. I created simple [wireframes](docs/images/wireframes.png) for the homepage and the article detail page. 
   - Note: During development, I changed the layout of the post detail page and comments because there would not be enough space and it reduced development time by reusing existing components  
 - Lastly, I wrote the majority of my user stories and tasks in my [GitHub Project](https://github.com/users/Cushione/projects/4) 
 
@@ -187,7 +187,7 @@ The first step in my development process was to plan the website thoroughly:
 
 #### Custom fields
 ![Custom Fields](docs/images/custom-field.png)
-- Custom field were created in the [settings of the GitHub Project](https://github.com/users/Cushione/projects/4/settings)
+Custom fields were created in the [settings of the GitHub Project](https://github.com/users/Cushione/projects/4/settings)
 
 ### Git
 - I started the program and repository by using the [gitpod python template](https://github.com/Code-Institute-Org/python-essentials-template) provided by the Code Insitute.
@@ -241,7 +241,7 @@ The live link can be found here: [Photora](https://photora.herokuapp.com/)
 
 # Acknowledgements
 
-I would like to acknowledge the following people who have helped me along the way in completing my fourth portfolio project:
+I would like to acknowledge the following people who have helped me along the way in completing my final portfolio project:
 - My husband, Moritz Wach, for all his knowledge and relentless support.
 - My mentor, Spencer Barriball, for his guidance and inspiration.
-- My friends and colleagues for testing the website rigorously and leaving/editing/deleting comments.
+- My friends and colleagues for testing the website rigorously and sharing posts and writing comments.
