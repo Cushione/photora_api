@@ -163,7 +163,8 @@ Test results from the Django tests: All 6 tests passed.
 There were no errors found in any of my python files using the [Python Linter provided by the Code Institute](https://pep8ci.herokuapp.com/).
 
 ## Bugs
-There are no known unfixed bugs.
+**Application error in production deployment for unautherized unsafe methods**  
+Unauthorized requests with unsafe methods are causing an application error in the deployed version of the drf application. Local deployment returns a 403 error as expected. Potential causes could be the remote postgres database. Not fixed due to time constraints.
 
 # Development process
 While I was working on this project, I tried to follow an agile development approach as much as possible. 
