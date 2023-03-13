@@ -187,7 +187,7 @@ The first step in my development process was to plan the website thoroughly:
 - After I finished the issue by fulfilling all the acceptance criteria, I closed the issue which moved it automatically into the "Done" Column.
 
 #### Custom fields
-![Custom Fields](docs/images/custom-field.png)
+![Custom Fields](docs/images/custom-field.png)  
 Custom fields were created in the [settings of the GitHub Project](https://github.com/users/Cushione/projects/4/settings)
 
 ### Git
@@ -221,7 +221,7 @@ The steps to deploy an app to Heroku are as follows:
     - deploy a branch manually by selecting the branch and clicking the button "Deploy Branch" in the "Manual deploys" section.
 
 
-The live link can be found here: [Photora](https://photora.herokuapp.com/)
+The live link can be found here: [Photora API](https://photora-api.herokuapp.com/)
 
 # Credits
 
