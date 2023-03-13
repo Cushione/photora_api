@@ -221,7 +221,7 @@ The steps to deploy an app to Heroku are as follows:
     - deploy a branch manually by selecting the branch and clicking the button "Deploy Branch" in the "Manual deploys" section.
 
 
-The live link can be found here: [Photora API](https://photora-api.herokuapp.com/)
+The live link can be found here: [Photora API](https://photora-api.herokuapp.com/posts)
 
 # Credits
 
