@@ -3,7 +3,7 @@
 Photora is a social media application that allows authenticated members to post images and share their content with other people. Members can post, like posts, comment on posts, and also edit and delete their posts. Members can also follow other members to create a personalized feed.
 
 # Live Page
-[https://photora.herokuapp.com/](https://photora.herokuapp.com/)
+[https://photora.1441990.xyz](https://photora.1441990.xyz)
 
 ![Website Mockup](docs/images/website-mockup.png)
 
@@ -60,81 +60,81 @@ The repository for the frontend of the application can be found here: [https://g
 
 ## Authentication
 
-### [Registration](https://photora-api.herokuapp.com/dj-rest-auth/registration/)
+### [Registration](https://photora-api.1441990.xyz/dj-rest-auth/registration/)
 /dj-rest-auth/registration/
 - POST: creates a new user
 
-### [API Tokens](https://photora-api.herokuapp.com/api/token/)
+### [API Tokens](https://photora-api.1441990.xyz/api/token/)
 /api/token/
 - POST: returns a set of JWT tokens
 
-### [API Token Refresh](https://photora-api.herokuapp.com/api/token/refresh/)
+### [API Token Refresh](https://photora-api.1441990.xyz/api/token/refresh/)
 /api/token/refresh/
 - POST: allows authenticated users to refresh their access token by providing a refresh token
 
 ## Profiles
 
-### [Profile List](https://photora-api.herokuapp.com/profiles)
+### [Profile List](https://photora-api.1441990.xyz/profiles)
 /profiles
 - GET: returns a list of all the profiles
 
-### [Profile Detail](https://photora-api.herokuapp.com/profiles/8)
+### [Profile Detail](https://photora-api.1441990.xyz/profiles/8)
 /profiles/:id
 - GET: returns the profile specified by id
 
-### [Profile Follow](https://photora-api.herokuapp.com/profiles/8/followers)
+### [Profile Follow](https://photora-api.1441990.xyz/profiles/8/followers)
 /profiles/:id/followers
 - GET: returns a list of profiles following the specified profile
 - POST: allows authenticated users to follow the specified profile
 
-### [User Profile](https://photora-api.herokuapp.com/profiles/user)
+### [User Profile](https://photora-api.1441990.xyz/profiles/user)
 /profiles/user
 - GET: returns the profile of the requesting user
 - PUT: allows authenticated users to update their profile
 
 ## Posts
 
-### [Post List](https://photora-api.herokuapp.com/posts)
+### [Post List](https://photora-api.1441990.xyz/posts)
 /posts
 - GET: returns a list of all the posts
   - Authenticated: Filters out the posts from the requesting user and from the profiles the user follows
 - POST: allows authenticated users to create posts
 
-### [Post Detail](https://photora-api.herokuapp.com/posts/12)
+### [Post Detail](https://photora-api.1441990.xyz/posts/12)
 /posts/:id
 - GET: returns the post specified by id
 - PUT: allows the owner to update the post
 - DELETE: allows the owner to delete the post
 
-### [Post Like](https://photora-api.herokuapp.com/posts/12/likes)
+### [Post Like](https://photora-api.1441990.xyz/posts/12/likes)
 /posts/:id/likes
 - GET: returns a list of profiles that liked the specified post
 - POST: allows authenticated users to like the specified post
 
-### [Post Search](https://photora-api.herokuapp.com/posts/search?keywords=dog)
+### [Post Search](https://photora-api.1441990.xyz/posts/search?keywords=dog)
 /posts/search?keywords=:keywords
 - GET: returns a list of post that contain all keywords in either the title, description, or the name of the author's profile
 
-### [Profile Post List](https://photora-api.herokuapp.com/profiles/8/posts)
+### [Profile Post List](https://photora-api.1441990.xyz/profiles/8/posts)
 /profiles/:id/posts
 - GET: returns all the post from the specified profile
 
-### [Follow Post List](https://photora-api.herokuapp.com/posts/feed)
+### [Follow Post List](https://photora-api.1441990.xyz/posts/feed)
 /posts
 - GET: allows authenticated users to retrieve a list of all the post from the profiles they follow
 
-### [Liked Post List](https://photora-api.herokuapp.com/posts/liked)
+### [Liked Post List](https://photora-api.1441990.xyz/posts/liked)
 /posts
 - GET: allows authenticated users to retrieve a list of all the post they liked
 
 ## Comments
 
-### [Comment List](https://photora-api.herokuapp.com/posts/18/comments)
+### [Comment List](https://photora-api.1441990.xyz/posts/18/comments)
 /posts/:id/comments
 - GET: returns a list of all the comments from a specified post
 - POST: allows authenticated users to create comments on the specified post
 
-### [Comment Detail](https://photora-api.herokuapp.com/posts/18/comments/20)
+### [Comment Detail](https://photora-api.1441990.xyz/posts/18/comments/20)
 /posts/:id/comments/:id
 - GET: returns the comment specified by id
 - PUT: allows the owner to update the comment
@@ -221,7 +221,7 @@ The steps to deploy an app to Heroku are as follows:
     - deploy a branch manually by selecting the branch and clicking the button "Deploy Branch" in the "Manual deploys" section.
 
 
-The live link can be found here: [Photora API](https://photora-api.herokuapp.com/posts)
+The live link can be found here: [Photora API](https://photora-api.1441990.xyz/posts)
 
 # Credits
 
